@@ -1,9 +1,24 @@
 ---
-- name: Install Krew plugins
-  shell: "kubectl krew install {{ item }}"
-  loop: '{{ krew_plugins | flatten(levels=1) }}'
+- name: List krew plugins
+  shell: 'kubectl krew list | cut -d " " -f 1'
+  register: krew_plugins_installed
+  changed_when: False
 
-- name: Upgrade Krew plugins
+- name: Install krew plugins
+  shell: "kubectl krew install {{ item }}"
+  loop: '{{ krew_install_plugins | flatten(levels=1) }}'
+  when: not item in krew_plugins_installed.stdout_lines
+
+- name: Uninstall krew plugins
+  shell: "kubectl krew uninstall {{ item }}"
+  loop: '{{ krew_uninstall_plugins | flatten(levels=1) }}'
+  when: item in krew_plugins_installed.stdout_lines
+
+- name: First run krew update
+  shell: 'kubectl krew update'
+  when: krew_plugins_upgrade
+
+- name: Upgrade krew plugins
   shell: 'kubectl krew upgrade'
   when: krew_plugins_upgrade
 

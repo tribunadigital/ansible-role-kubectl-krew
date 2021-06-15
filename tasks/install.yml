@@ -33,8 +33,8 @@
     mode: 0755
     remote_src: true
 
-- name: Run Krew Update
+- name: First run krew update
   shell: /usr/local/bin/kubectl krew update
   args:
-    creates: /root/.krew/index/plugins/krew_plugins.yaml
+    creates: /root/.krew/index/default/plugins
 
