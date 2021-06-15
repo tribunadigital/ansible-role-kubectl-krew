@@ -1,7 +1,8 @@
 ---
 - name: Fetch krew
   get_url:
-    url: "https://storage.googleapis.com/krew/{{ krew_version }}/krew.tar.gz"
+    url: "{{ krew_url }}"
+    checksum: "sha256:{{ krew_sha256 }}"
     dest: /tmp/krew.tar.gz
 
 - name: Make tempdir
@@ -27,7 +28,7 @@
 
 - name: Copy krew plugin to /usr/local/bin
   copy:
-    src: "/tmp/krew/krew-{{ ansible_system|lower }}_{{ linux_platform }}"
+    src: "/tmp/krew/krew-{{ ansible_system | lower }}_{{ linux_platform }}"
     dest: /usr/local/bin/kubectl-krew
     mode: 0755
     remote_src: true
@@ -36,3 +37,4 @@
   shell: /usr/local/bin/kubectl krew update
   args:
     creates: /root/.krew/index/plugins/krew_plugins.yaml
+

@@ -1,5 +1,9 @@
 ---
 - name: Install Krew plugins
   shell: "kubectl krew install {{ item }}"
-  with_items: "{{ krew_plugins }}"
-  when: krew_plugins is defined
+  loop: '{{ krew_plugins | flatten(levels=1) }}'
+
+- name: Upgrade Krew plugins
+  shell: 'kubectl krew upgrade'
+  when: krew_plugins_upgrade
+

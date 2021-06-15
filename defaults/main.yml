@@ -1,7 +1,12 @@
 ---
 # defaults file for kubectl_krew
-
-krew_version: "v0.2.1"
-
-krew_plugins:
-  - "ingress-nginx"
+#
+krew_version: "v0.4.1"
+krew_url: "https://github.com/kubernetes-sigs/krew/releases/download/{{ krew_version }}/krew.tar.gz"
+krew_sha256: "a26deea175f70264260d59a4e061778a892f8a8e301ac261660dd7d24c551c99"
+krew_plugins_upgrade: False
+krew_plugins: []
+# krew_plugins:
+#   - minio
+#   - ingress-nginx
+#
