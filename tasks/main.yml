@@ -1,6 +1,6 @@
 ---
 - name: Install Kubectl Krew Plugin
-  include: install.yml
+  import_tasks: install.yml
 
 - name: Install Plugins
-  include: plugins.yml
+  import_tasks: plugins.yml
